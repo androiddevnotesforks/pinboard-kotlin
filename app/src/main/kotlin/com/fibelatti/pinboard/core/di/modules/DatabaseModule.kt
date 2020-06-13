@@ -8,8 +8,11 @@ import com.fibelatti.pinboard.core.persistence.database.getAllMigrations
 import com.fibelatti.pinboard.features.posts.data.PostsDao
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
+@InstallIn(ApplicationComponent::class)
 @Module
 object DatabaseModule {
 

@@ -11,22 +11,20 @@ import com.fibelatti.core.extension.toast
 import com.fibelatti.pinboard.BuildConfig
 import com.fibelatti.pinboard.R
 import com.fibelatti.pinboard.core.android.Appearance
-import com.fibelatti.pinboard.core.di.AppComponent
-import com.fibelatti.pinboard.core.di.AppComponentProvider
+import com.fibelatti.pinboard.core.di.GraphAccessor
 import com.fibelatti.pinboard.core.di.ViewModelProvider
+import com.fibelatti.pinboard.core.extension.getEntryPoint
 
 abstract class BaseActivity @ContentView constructor(
     @LayoutRes contentLayoutId: Int
 ) : AppCompatActivity(contentLayoutId) {
 
-    protected val appComponent: AppComponent
-        get() = (application as AppComponentProvider).appComponent
-    val viewModelProvider: ViewModelProvider
-        get() = appComponent
+    protected val graphAccessor: GraphAccessor by getEntryPoint()
+    val viewModelProvider: ViewModelProvider get() = graphAccessor
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportFragmentManager.fragmentFactory = appComponent.fragmentFactory()
+        supportFragmentManager.fragmentFactory = graphAccessor.fragmentFactory()
         setupTheme()
         super.onCreate(savedInstanceState)
     }
@@ -40,7 +38,7 @@ abstract class BaseActivity @ContentView constructor(
 
     private fun setupTheme() {
         workaroundWebViewNightModeIssue()
-        when (appComponent.userDataSource().getAppearance()) {
+        when (graphAccessor.userDataSource().getAppearance()) {
             Appearance.DarkTheme -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             Appearance.LightTheme -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

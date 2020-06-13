@@ -96,7 +96,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         setupView()
         setupViewModels()
 
-        inAppUpdateManager = appComponent.inAppUpdateManager().also {
+        inAppUpdateManager = graphAccessor.inAppUpdateManager().also {
             it.checkForAvailableUpdates(this, FLEXIBLE_UPDATE_REQUEST, ::onUpdateDownloadComplete)
         }
     }

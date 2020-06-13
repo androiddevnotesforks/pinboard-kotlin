@@ -7,8 +7,11 @@ import com.fibelatti.pinboard.features.user.domain.UserRepository
 import com.fibelatti.pinboard.features.user.presentation.AuthFragment
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import dagger.multibindings.IntoMap
 
+@InstallIn(ApplicationComponent::class)
 @Module
 abstract class AuthModule {
 

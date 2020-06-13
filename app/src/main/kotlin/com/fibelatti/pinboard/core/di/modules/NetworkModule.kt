@@ -9,6 +9,8 @@ import com.fibelatti.pinboard.core.network.UnauthorizedInterceptor
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,6 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Suppress("MagicNumber")
+@InstallIn(ApplicationComponent::class)
 @Module
 object NetworkModule {
 

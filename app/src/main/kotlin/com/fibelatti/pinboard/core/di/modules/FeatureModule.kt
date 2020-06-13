@@ -27,10 +27,13 @@ import com.fibelatti.pinboard.features.user.presentation.UserPreferencesFragment
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 import retrofit2.create
 
+@InstallIn(ApplicationComponent::class)
 @Module
 abstract class FeatureModule {
 
