@@ -1,12 +1,12 @@
 package com.fibelatti.pinboard.features.appstate
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.fibelatti.core.archcomponents.BaseViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class AppStateViewModel @Inject constructor(
+class AppStateViewModel @ViewModelInject constructor(
     private val appStateRepository: AppStateRepository
 ) : BaseViewModel() {
 

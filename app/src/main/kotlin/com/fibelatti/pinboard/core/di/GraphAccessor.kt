@@ -9,7 +9,7 @@ import dagger.hilt.android.components.ApplicationComponent
 
 @InstallIn(ApplicationComponent::class)
 @EntryPoint
-interface GraphAccessor : ViewModelProvider {
+interface GraphAccessor {
 
     fun fragmentFactory(): FragmentFactory
     fun userDataSource(): UserDataSource

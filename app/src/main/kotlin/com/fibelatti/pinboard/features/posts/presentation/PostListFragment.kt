@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.transition.Transition
 import androidx.transition.TransitionInflater
 import com.fibelatti.core.archcomponents.extension.observe
@@ -19,11 +21,10 @@ import com.fibelatti.pinboard.core.AppConfig
 import com.fibelatti.pinboard.core.android.DefaultTransitionListener
 import com.fibelatti.pinboard.core.android.SharedElementTransitionNames
 import com.fibelatti.pinboard.core.android.base.BaseFragment
-import com.fibelatti.pinboard.core.extension.activityViewModel
 import com.fibelatti.pinboard.core.extension.shareText
 import com.fibelatti.pinboard.core.extension.show
-import com.fibelatti.pinboard.core.extension.viewModel
 import com.fibelatti.pinboard.features.appstate.AddPost
+import com.fibelatti.pinboard.features.appstate.AppStateViewModel
 import com.fibelatti.pinboard.features.appstate.ClearSearch
 import com.fibelatti.pinboard.features.appstate.EditPost
 import com.fibelatti.pinboard.features.appstate.GetNextPostPage
@@ -42,11 +43,13 @@ import com.fibelatti.pinboard.features.appstate.ViewPost
 import com.fibelatti.pinboard.features.appstate.ViewSearch
 import com.fibelatti.pinboard.features.mainActivity
 import com.fibelatti.pinboard.features.posts.domain.model.Post
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_post_list.*
 import kotlinx.android.synthetic.main.layout_offline_alert.*
 import kotlinx.android.synthetic.main.layout_search_active.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class PostListFragment @Inject constructor(
     private val postsAdapter: PostListAdapter
 ) : BaseFragment(R.layout.fragment_post_list) {
@@ -56,8 +59,8 @@ class PostListFragment @Inject constructor(
         val TAG: String = "PostListFragment"
     }
 
-    private val appStateViewModel by activityViewModel { viewModelProvider.appStateViewModel() }
-    private val postListViewModel by viewModel { viewModelProvider.postListViewModel() }
+    private val appStateViewModel: AppStateViewModel by activityViewModels()
+    private val postListViewModel: PostListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

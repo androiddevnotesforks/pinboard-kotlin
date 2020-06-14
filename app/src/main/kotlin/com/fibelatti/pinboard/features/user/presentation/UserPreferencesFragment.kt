@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.archcomponents.extension.observeEvent
 import com.fibelatti.core.extension.gone
@@ -11,13 +13,14 @@ import com.fibelatti.core.extension.navigateBack
 import com.fibelatti.pinboard.R
 import com.fibelatti.pinboard.core.android.Appearance
 import com.fibelatti.pinboard.core.android.base.BaseFragment
-import com.fibelatti.pinboard.core.extension.activityViewModel
-import com.fibelatti.pinboard.core.extension.viewModel
+import com.fibelatti.pinboard.features.appstate.AppStateViewModel
 import com.fibelatti.pinboard.features.mainActivity
 import com.fibelatti.pinboard.features.posts.domain.PreferredDetailsView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_preferences.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class UserPreferencesFragment @Inject constructor() : BaseFragment(R.layout.fragment_user_preferences) {
 
     companion object {
@@ -25,8 +28,8 @@ class UserPreferencesFragment @Inject constructor() : BaseFragment(R.layout.frag
         val TAG: String = "UserPreferencesFragment"
     }
 
-    private val appStateViewModel by activityViewModel { viewModelProvider.appStateViewModel() }
-    private val userPreferencesViewModel by viewModel { viewModelProvider.userPreferencesViewModel() }
+    private val appStateViewModel: AppStateViewModel by activityViewModels()
+    private val userPreferencesViewModel: UserPreferencesViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

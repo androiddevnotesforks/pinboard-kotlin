@@ -1,5 +1,6 @@
 package com.fibelatti.pinboard.features.notes.presentation
 
+import androidx.hilt.lifecycle.ViewModelInject
 import com.fibelatti.core.archcomponents.BaseViewModel
 import com.fibelatti.core.functional.mapCatching
 import com.fibelatti.core.functional.onFailure
@@ -10,9 +11,8 @@ import com.fibelatti.pinboard.features.notes.domain.NotesRepository
 import com.fibelatti.pinboard.features.notes.domain.model.Note
 import com.fibelatti.pinboard.features.notes.domain.model.NoteSorting
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class NoteListViewModel @Inject constructor(
+class NoteListViewModel @ViewModelInject constructor(
     private val notesRepository: NotesRepository,
     private val appStateRepository: AppStateRepository,
     private val dateFormatter: DateFormatter

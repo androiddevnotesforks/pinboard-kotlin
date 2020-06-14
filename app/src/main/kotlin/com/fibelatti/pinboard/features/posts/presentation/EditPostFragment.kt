@@ -8,6 +8,8 @@ import android.os.Handler
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.archcomponents.extension.observeEvent
 import com.fibelatti.core.extension.afterTextChanged
@@ -29,13 +31,13 @@ import com.fibelatti.core.extension.visible
 import com.fibelatti.core.extension.visibleIf
 import com.fibelatti.pinboard.R
 import com.fibelatti.pinboard.core.android.base.BaseFragment
-import com.fibelatti.pinboard.core.extension.activityViewModel
 import com.fibelatti.pinboard.core.extension.show
-import com.fibelatti.pinboard.core.extension.viewModel
+import com.fibelatti.pinboard.features.appstate.AppStateViewModel
 import com.fibelatti.pinboard.features.appstate.EditPostContent
 import com.fibelatti.pinboard.features.appstate.NavigateBack
 import com.fibelatti.pinboard.features.mainActivity
 import com.fibelatti.pinboard.features.posts.domain.model.Post
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_edit_post.*
 import kotlinx.android.synthetic.main.layout_edit_description.*
 import kotlinx.android.synthetic.main.layout_edit_post.*
@@ -43,6 +45,7 @@ import kotlinx.android.synthetic.main.layout_edit_tags.*
 import kotlinx.android.synthetic.main.layout_progress_bar.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class EditPostFragment @Inject constructor() : BaseFragment(R.layout.fragment_edit_post) {
 
     companion object {
@@ -50,9 +53,9 @@ class EditPostFragment @Inject constructor() : BaseFragment(R.layout.fragment_ed
         val TAG: String = "EditPostFragment"
     }
 
-    private val appStateViewModel by activityViewModel { viewModelProvider.appStateViewModel() }
-    private val editPostViewModel by viewModel { viewModelProvider.editPostViewModel() }
-    private val postDetailViewModel by viewModel { viewModelProvider.postDetailsViewModel() }
+    private val appStateViewModel: AppStateViewModel by activityViewModels()
+    private val editPostViewModel: EditPostViewModel by viewModels()
+    private val postDetailViewModel: PostDetailViewModel by viewModels()
 
     private var initialInsetBottomValue = -1
 

@@ -2,6 +2,8 @@ package com.fibelatti.pinboard.features.notes.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.extension.gone
 import com.fibelatti.core.extension.goneIf
@@ -12,17 +14,18 @@ import com.fibelatti.core.extension.withItemOffsetDecoration
 import com.fibelatti.core.extension.withLinearLayoutManager
 import com.fibelatti.pinboard.R
 import com.fibelatti.pinboard.core.android.base.BaseFragment
-import com.fibelatti.pinboard.core.extension.activityViewModel
-import com.fibelatti.pinboard.core.extension.viewModel
+import com.fibelatti.pinboard.features.appstate.AppStateViewModel
 import com.fibelatti.pinboard.features.appstate.RefreshNotes
 import com.fibelatti.pinboard.features.appstate.ViewNote
 import com.fibelatti.pinboard.features.mainActivity
 import com.fibelatti.pinboard.features.notes.domain.model.Note
 import com.fibelatti.pinboard.features.notes.domain.model.NoteSorting
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_note_list.*
 import kotlinx.android.synthetic.main.layout_progress_bar.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NoteListFragment @Inject constructor(
     private val noteListAdapter: NoteListAdapter
 ) : BaseFragment(R.layout.fragment_note_list) {
@@ -32,8 +35,8 @@ class NoteListFragment @Inject constructor(
         val TAG: String = "NoteListFragment"
     }
 
-    private val appStateViewModel by activityViewModel { viewModelProvider.appStateViewModel() }
-    private val noteListViewModel by viewModel { viewModelProvider.noteListViewModel() }
+    private val appStateViewModel: AppStateViewModel by activityViewModels()
+    private val noteListViewModel: NoteListViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

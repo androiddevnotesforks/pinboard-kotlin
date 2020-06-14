@@ -2,6 +2,7 @@ package com.fibelatti.pinboard.features.user.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.transition.TransitionInflater
 import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.archcomponents.extension.observeEvent
@@ -17,14 +18,15 @@ import com.fibelatti.pinboard.R
 import com.fibelatti.pinboard.core.android.LinkTransformationMethod
 import com.fibelatti.pinboard.core.android.SharedElementTransitionNames
 import com.fibelatti.pinboard.core.android.base.BaseFragment
-import com.fibelatti.pinboard.core.extension.activityViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_auth.*
 import kotlinx.android.synthetic.main.layout_auth_form.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AuthFragment @Inject constructor() : BaseFragment(R.layout.fragment_auth) {
 
-    private val authViewModel by activityViewModel { viewModelProvider.authViewModel() }
+    private val authViewModel: AuthViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

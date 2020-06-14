@@ -12,7 +12,6 @@ import com.fibelatti.pinboard.BuildConfig
 import com.fibelatti.pinboard.R
 import com.fibelatti.pinboard.core.android.Appearance
 import com.fibelatti.pinboard.core.di.GraphAccessor
-import com.fibelatti.pinboard.core.di.ViewModelProvider
 import com.fibelatti.pinboard.core.extension.getEntryPoint
 
 abstract class BaseActivity @ContentView constructor(
@@ -20,7 +19,6 @@ abstract class BaseActivity @ContentView constructor(
 ) : AppCompatActivity(contentLayoutId) {
 
     protected val graphAccessor: GraphAccessor by getEntryPoint()
-    val viewModelProvider: ViewModelProvider get() = graphAccessor
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {

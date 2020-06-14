@@ -3,6 +3,8 @@ package com.fibelatti.pinboard.features.posts.presentation
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.extension.animateChangingTransitions
 import com.fibelatti.core.extension.applyAs
@@ -15,10 +17,9 @@ import com.fibelatti.core.extension.textAsString
 import com.fibelatti.core.extension.visible
 import com.fibelatti.pinboard.R
 import com.fibelatti.pinboard.core.android.base.BaseFragment
-import com.fibelatti.pinboard.core.extension.activityViewModel
 import com.fibelatti.pinboard.core.extension.blink
-import com.fibelatti.pinboard.core.extension.viewModel
 import com.fibelatti.pinboard.features.appstate.AddSearchTag
+import com.fibelatti.pinboard.features.appstate.AppStateViewModel
 import com.fibelatti.pinboard.features.appstate.ClearSearch
 import com.fibelatti.pinboard.features.appstate.RefreshSearchTags
 import com.fibelatti.pinboard.features.appstate.RemoveSearchTag
@@ -27,9 +28,11 @@ import com.fibelatti.pinboard.features.mainActivity
 import com.fibelatti.pinboard.features.tags.domain.model.Tag
 import com.fibelatti.pinboard.features.tags.presentation.TagsAdapter
 import com.fibelatti.pinboard.features.tags.presentation.TagsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search_post.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class PostSearchFragment @Inject constructor(
     private val tagsAdapter: TagsAdapter
 ) : BaseFragment(R.layout.fragment_search_post) {
@@ -39,8 +42,8 @@ class PostSearchFragment @Inject constructor(
         val TAG: String = "PostSearchFragment"
     }
 
-    private val appStateViewModel by activityViewModel { viewModelProvider.appStateViewModel() }
-    private val tagsViewModel by viewModel { viewModelProvider.tagsViewModel() }
+    private val appStateViewModel: AppStateViewModel by activityViewModels()
+    private val tagsViewModel: TagsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

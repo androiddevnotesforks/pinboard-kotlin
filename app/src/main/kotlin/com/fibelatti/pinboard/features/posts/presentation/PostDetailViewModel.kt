@@ -1,5 +1,6 @@
 package com.fibelatti.pinboard.features.posts.presentation
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.core.archcomponents.BaseViewModel
@@ -13,9 +14,8 @@ import com.fibelatti.pinboard.features.appstate.PostDeleted
 import com.fibelatti.pinboard.features.posts.domain.model.Post
 import com.fibelatti.pinboard.features.posts.domain.usecase.DeletePost
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class PostDetailViewModel @Inject constructor(
+class PostDetailViewModel @ViewModelInject constructor(
     private val appStateRepository: AppStateRepository,
     private val deletePost: DeletePost
 ) : BaseViewModel() {

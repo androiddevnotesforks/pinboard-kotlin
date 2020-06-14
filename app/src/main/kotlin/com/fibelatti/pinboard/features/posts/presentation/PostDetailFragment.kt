@@ -13,6 +13,8 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.MenuRes
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.archcomponents.extension.observeEvent
 import com.fibelatti.core.extension.gone
@@ -25,21 +27,22 @@ import com.fibelatti.core.extension.visibleIf
 import com.fibelatti.pinboard.R
 import com.fibelatti.pinboard.core.android.ConnectivityInfoProvider
 import com.fibelatti.pinboard.core.android.base.BaseFragment
-import com.fibelatti.pinboard.core.extension.activityViewModel
 import com.fibelatti.pinboard.core.extension.shareText
 import com.fibelatti.pinboard.core.extension.show
-import com.fibelatti.pinboard.core.extension.viewModel
+import com.fibelatti.pinboard.features.appstate.AppStateViewModel
 import com.fibelatti.pinboard.features.appstate.EditPost
 import com.fibelatti.pinboard.features.appstate.PopularPostDetailContent
 import com.fibelatti.pinboard.features.appstate.PostDetailContent
 import com.fibelatti.pinboard.features.mainActivity
 import com.fibelatti.pinboard.features.posts.domain.model.Post
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_post_detail.*
 import kotlinx.android.synthetic.main.layout_file_view.*
 import kotlinx.android.synthetic.main.layout_progress_bar.*
 import kotlinx.android.synthetic.main.layout_url_error.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class PostDetailFragment @Inject constructor(
     private val connectivityInfoProvider: ConnectivityInfoProvider
 ) : BaseFragment(R.layout.fragment_post_detail) {
@@ -49,9 +52,9 @@ class PostDetailFragment @Inject constructor(
         val TAG: String = "PostDetailFragment"
     }
 
-    private val appStateViewModel by activityViewModel { viewModelProvider.appStateViewModel() }
-    private val postDetailViewModel by viewModel { viewModelProvider.postDetailsViewModel() }
-    private val popularPostsViewModel by viewModel { viewModelProvider.popularPostsViewModel() }
+    private val appStateViewModel: AppStateViewModel by activityViewModels()
+    private val postDetailViewModel: PostDetailViewModel by viewModels()
+    private val popularPostsViewModel: PopularPostsViewModel by viewModels()
 
     private val knownFileExtensions =
         listOf(

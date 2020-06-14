@@ -1,5 +1,6 @@
 package com.fibelatti.pinboard.features.tags.presentation
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.core.archcomponents.BaseViewModel
@@ -13,9 +14,8 @@ import com.fibelatti.pinboard.features.tags.domain.model.Tag
 import com.fibelatti.pinboard.features.tags.domain.model.TagSorting
 import com.fibelatti.pinboard.features.tags.domain.usecase.GetAllTags
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class TagsViewModel @Inject constructor(
+class TagsViewModel @ViewModelInject constructor(
     private val getAllTags: GetAllTags,
     private val appStateRepository: AppStateRepository
 ) : BaseViewModel() {

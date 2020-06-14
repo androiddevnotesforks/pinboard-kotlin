@@ -2,6 +2,8 @@ package com.fibelatti.pinboard.features.posts.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.extension.gone
 import com.fibelatti.core.extension.goneIf
@@ -13,19 +15,20 @@ import com.fibelatti.core.extension.withItemOffsetDecoration
 import com.fibelatti.core.extension.withLinearLayoutManager
 import com.fibelatti.pinboard.R
 import com.fibelatti.pinboard.core.android.base.BaseFragment
-import com.fibelatti.pinboard.core.extension.activityViewModel
 import com.fibelatti.pinboard.core.extension.shareText
-import com.fibelatti.pinboard.core.extension.viewModel
+import com.fibelatti.pinboard.features.appstate.AppStateViewModel
 import com.fibelatti.pinboard.features.appstate.PopularPostsContent
 import com.fibelatti.pinboard.features.appstate.RefreshPopular
 import com.fibelatti.pinboard.features.appstate.ViewPost
 import com.fibelatti.pinboard.features.mainActivity
 import com.fibelatti.pinboard.features.posts.domain.model.Post
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_popular_posts.*
 import kotlinx.android.synthetic.main.layout_offline_alert.*
 import kotlinx.android.synthetic.main.layout_progress_bar.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class PopularPostsFragment @Inject constructor(
     private val popularPostsAdapter: PopularPostsAdapter
 ) : BaseFragment(R.layout.fragment_popular_posts) {
@@ -35,8 +38,8 @@ class PopularPostsFragment @Inject constructor(
         val TAG: String = "PopularPostsFragment"
     }
 
-    private val appStateViewModel by activityViewModel { viewModelProvider.appStateViewModel() }
-    private val popularPostsViewModel by viewModel { viewModelProvider.popularPostsViewModel() }
+    private val appStateViewModel: AppStateViewModel by activityViewModels()
+    private val popularPostsViewModel: PopularPostsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

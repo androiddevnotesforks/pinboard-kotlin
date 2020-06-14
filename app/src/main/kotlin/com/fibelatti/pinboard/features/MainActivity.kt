@@ -8,6 +8,7 @@ import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -26,9 +27,9 @@ import com.fibelatti.pinboard.core.android.SharedElementTransitionNames
 import com.fibelatti.pinboard.core.android.base.BaseActivity
 import com.fibelatti.pinboard.core.android.customview.TitleLayout
 import com.fibelatti.pinboard.core.extension.doOnApplyWindowInsets
-import com.fibelatti.pinboard.core.extension.viewModel
 import com.fibelatti.pinboard.core.functional.DoNothing
 import com.fibelatti.pinboard.features.appstate.AddPostContent
+import com.fibelatti.pinboard.features.appstate.AppStateViewModel
 import com.fibelatti.pinboard.features.appstate.EditPostContent
 import com.fibelatti.pinboard.features.appstate.ExternalBrowserContent
 import com.fibelatti.pinboard.features.appstate.ExternalContent
@@ -55,11 +56,13 @@ import com.fibelatti.pinboard.features.splash.presentation.SplashFragment
 import com.fibelatti.pinboard.features.tags.presentation.TagsFragment
 import com.fibelatti.pinboard.features.user.domain.LoginState
 import com.fibelatti.pinboard.features.user.presentation.AuthFragment
+import com.fibelatti.pinboard.features.user.presentation.AuthViewModel
 import com.fibelatti.pinboard.features.user.presentation.UserPreferencesFragment
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_auth.imageViewAppLogo as authViewLogo
 import kotlinx.android.synthetic.main.fragment_splash.imageViewAppLogo as splashViewLogo
@@ -67,14 +70,15 @@ import kotlinx.android.synthetic.main.fragment_splash.imageViewAppLogo as splash
 val Fragment.mainActivity: MainActivity? get() = activity as? MainActivity
 var Intent.fromBuilder by IntentDelegate.Boolean("FROM_BUILDER", false)
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity(R.layout.activity_main) {
 
     companion object {
         private const val FLEXIBLE_UPDATE_REQUEST = 1001
     }
 
-    private val appStateViewModel by viewModel { viewModelProvider.appStateViewModel() }
-    private val authViewModel by viewModel { viewModelProvider.authViewModel() }
+    private val appStateViewModel: AppStateViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
 
     private val handler = Handler()
 

@@ -1,5 +1,6 @@
 package com.fibelatti.pinboard.features.posts.presentation
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.core.archcomponents.BaseViewModel
@@ -16,9 +17,8 @@ import com.fibelatti.pinboard.features.posts.domain.usecase.AddPost
 import com.fibelatti.pinboard.features.posts.domain.usecase.GetPopularPosts
 import com.fibelatti.pinboard.features.user.domain.UserRepository
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class PopularPostsViewModel @Inject constructor(
+class PopularPostsViewModel @ViewModelInject constructor(
     private val appStateRepository: AppStateRepository,
     private val userRepository: UserRepository,
     private val getPopularPosts: GetPopularPosts,

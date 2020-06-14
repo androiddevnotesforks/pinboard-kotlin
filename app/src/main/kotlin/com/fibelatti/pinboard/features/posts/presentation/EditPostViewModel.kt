@@ -1,5 +1,6 @@
 package com.fibelatti.pinboard.features.posts.presentation
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.core.archcomponents.BaseViewModel
@@ -18,9 +19,8 @@ import com.fibelatti.pinboard.features.posts.domain.usecase.GetSuggestedTags
 import com.fibelatti.pinboard.features.posts.domain.usecase.InvalidUrlException
 import com.fibelatti.pinboard.features.tags.domain.model.Tag
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class EditPostViewModel @Inject constructor(
+class EditPostViewModel @ViewModelInject constructor(
     private val appStateRepository: AppStateRepository,
     private val getSuggestedTags: GetSuggestedTags,
     private val addPost: AddPost,

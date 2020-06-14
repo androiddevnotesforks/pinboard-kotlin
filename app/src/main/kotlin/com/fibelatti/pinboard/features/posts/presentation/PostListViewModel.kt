@@ -1,6 +1,7 @@
 package com.fibelatti.pinboard.features.posts.presentation
 
 import androidx.annotation.VisibleForTesting
+import androidx.hilt.lifecycle.ViewModelInject
 import com.fibelatti.core.archcomponents.BaseViewModel
 import com.fibelatti.core.extension.exhaustive
 import com.fibelatti.core.functional.mapCatching
@@ -24,9 +25,8 @@ import com.fibelatti.pinboard.features.posts.domain.usecase.GetRecentPosts
 import com.fibelatti.pinboard.features.tags.domain.model.Tag
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class PostListViewModel @Inject constructor(
+class PostListViewModel @ViewModelInject constructor(
     private val getAllPosts: GetAllPosts,
     private val getRecentPosts: GetRecentPosts,
     private val appStateRepository: AppStateRepository

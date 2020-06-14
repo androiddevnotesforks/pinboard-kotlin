@@ -1,5 +1,6 @@
 package com.fibelatti.pinboard.features.user.presentation
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import com.fibelatti.core.archcomponents.BaseViewModel
 import com.fibelatti.core.archcomponents.LiveEvent
@@ -14,9 +15,8 @@ import com.fibelatti.pinboard.features.user.domain.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.net.HttpURLConnection
-import javax.inject.Inject
 
-class AuthViewModel @Inject constructor(
+class AuthViewModel @ViewModelInject constructor(
     private val loginUseCase: Login,
     private val userRepository: UserRepository,
     private val resourceProvider: ResourceProvider

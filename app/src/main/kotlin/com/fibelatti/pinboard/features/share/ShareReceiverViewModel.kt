@@ -1,5 +1,6 @@
 package com.fibelatti.pinboard.features.share
 
+import androidx.hilt.lifecycle.ViewModelInject
 import com.fibelatti.core.archcomponents.BaseViewModel
 import com.fibelatti.core.archcomponents.LiveEvent
 import com.fibelatti.core.archcomponents.MutableLiveEvent
@@ -16,9 +17,8 @@ import com.fibelatti.pinboard.features.posts.domain.usecase.ExtractUrl
 import com.fibelatti.pinboard.features.posts.domain.usecase.ParseUrl
 import com.fibelatti.pinboard.features.user.domain.UserRepository
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class ShareReceiverViewModel @Inject constructor(
+class ShareReceiverViewModel @ViewModelInject constructor(
     private val extractUrl: ExtractUrl,
     private val parseUrl: ParseUrl,
     private val addPost: AddPost,
