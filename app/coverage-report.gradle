@@ -1,63 +1,52 @@
 apply plugin: "jacoco"
 
 jacoco {
-    toolVersion = "0.8.4"
+    toolVersion = "0.8.5"
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testPinboardapiDebugUnitTest']) {
+def daggerGenerated = [
+    '**/**_Provide**Factory**.class',
+    '**/**Module_**Factory**.class',
+    '**/**Module_**Proxy**.class',
+    '**/**_Provide**Factory.class',
+    '**/**Dagger**.class',
+    '**/**_MembersInjector.class'
+]
 
-    group "Reporting"
-    description "Generate Jacoco coverage reports."
+def fileFilter = [
+    '**/R.class',
+    '**/R$*.class',
+    '**/BuildConfig.*',
+    '**/Manifest*.*',
+    '**/*Test*.*',
+    'android/**/*.*'
+]
+
+def debugTree = fileTree(dir: "${project.buildDir}/intermediates/javac/debug", excludes: (fileFilter + daggerGenerated))
+def debugKotlinTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: (fileFilter + daggerGenerated))
+def libKotlinTree = fileTree(dir: "$project.buildDir/classes/kotlin/main", excludes: (fileFilter + daggerGenerated))
+
+def mainSrc = "${project.projectDir}/src/main/java"
+def mainKotlinSrc = "${project.projectDir}/src/main/kotlin"
+
+task codeCoverageReport(type: JacocoReport) {
 
     reports {
-        html {
-            enabled = true
-            destination = file("${rootProject.buildDir}/reports/coverage-report")
-        }
+        xml.enabled = true
+        xml.setDestination(file("${project.buildDir}/reports/jacoco/report.xml"))
+        html.enabled = true
     }
 
-    def fileFilter = [
-        '**/R.class',
-        '**/R$*.class',
-        '**/R2.class',
-
-        '**/BuildConfig.*',
-        '**/Manifest*.*',
-
-        'android/**/*.*',
-        '**/*Activity*.*',
-        '**/*Fragment*.*',
-        '**/*Adapter.*',
-        '**/*ViewHolder*.*',
-        '**/*Layout.*',
-        '**/*View.*',
-
-        '**/*Test*.*',
-
-        '**/*$InjectAdapter*.*',
-        '**/*Injector*.*',
-        '**/*Module.*',
-        '**/*Component.*',
-        '**/*Injector*.*',
-
-        '**/*Dto*.*'
-    ]
-
-    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/kotlin"
-
-    getSourceDirectories().setFrom(files([mainSrc]))
-    getClassDirectories().setFrom(files([debugTree]))
-    getExecutionData().setFrom(fileTree(dir: project.buildDir, includes: [
-        'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    getSourceDirectories().setFrom(files([mainSrc, mainKotlinSrc]))
+    getClassDirectories().setFrom(files([debugTree, debugKotlinTree, libKotlinTree]))
+    getExecutionData().setFrom(fileTree(dir: "$project.buildDir", includes: [
+        "jacoco/test.exec",
+        "jacoco/testDebugUnitTest.exec",
+        "outputs/code-coverage/connected/*coverage.ec"
     ]))
-
-    doLast() {
-        print "file://${reports.html.destination}/index.html"
-    }
 }
 
-task copyTestClasses(type: Copy) {
-    from "build/tmp/kotlin-classes/debug"
-    into "build/intermediates/classes/debug"
+tasks.withType(Test) {
+    it.finalizedBy(["codeCoverageReport"])
 }
+
